@@ -1,0 +1,92 @@
+.icon{
+  width:54rpx;
+  height: 54rpx;
+}
+.tabar{
+  position: fixed;
+  bottom:0;
+  width: 100%;
+  height: 110rpx;
+  z-index: 999;
+  /* background:#F7F7FA; */
+}
+.tabBar{
+  width:96%;
+  position: absolute;
+  padding:10rpx 2%;
+  /* margin-left:-4rpx; */
+  /*  */
+  background-color: white;
+  font-size:20rpx;
+  color:#CCCCCC;
+  display: flex;
+  justify-content: space-between;
+  z-index: 888;
+  border-top: 1px solid #e5e5e5;
+  /* box-shadow: 6rpx 6rpx 6rpx 6rpx #aaa; */
+}
+
+ .tabBar-item{
+  /* float:left; */
+  width:30%;
+  text-align: center;
+  overflow: hidden;
+}
+/*当前字体颜色*/
+.tabBartext{
+  color:#333333;
+}
+.tabBar_center{
+  position: absolute;
+  left: 35%;
+  overflow: visible;
+  height: 100rpx;
+}
+.big_cricle,.yuan{
+  width: 120rpx;
+  border-radius: 50%;
+  height: 120rpx; 
+  margin-left: -60rpx;
+  left: 50%;
+  background-color: white;
+  position: absolute;
+}
+.big_cricle{
+  border:2rpx solid #e5e5e5;
+  top: -32rpx;
+  margin-left: -62rpx;
+  z-index: 1;
+}
+.yuan{
+  z-index: 1000;
+  top: -30rpx;
+}
+.tabBar_center .sm_cricle{
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  background: linear-gradient(#F1843B, #F1553B);
+  margin: -20rpx auto 0 auto;
+  box-shadow: 1px 1px 4px #F1843B;
+  position: relative;
+  z-index: 9999;
+  /* position: absolute;
+  left: 50%;
+  margin-left: -45rpx;
+  top: -40rpx; */
+}
+.zhe{
+  /* background-color: white; */
+  width: 90%;
+  height: 100rpx;
+  position: absolute;
+  top: 0;
+}
+.tabBar_center .tabBartext{
+  position: relative;
+  z-index: 10000;
+  margin-top: 4rpx;
+}
+.i-icon{
+  font-weight: bold;
+}

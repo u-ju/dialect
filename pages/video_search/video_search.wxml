@@ -1,0 +1,77 @@
+<view>
+  <form bindsubmit="formSubmit">
+    <view class="container_1">
+      <view class="box_search">
+        <view class='box_search_image'>
+          <image src='../../images/sousuo@2x.png'></image>
+        </view>
+        <view class="box_search_text">
+          <input placeholder='请输入你想要看的内容' placeholder-class='search_input_con' maxlength='20' name="keywords"></input>
+        </view>
+      </view>
+      <view class="text_search">
+        <button formType="submit" class="search_btn">搜索</button>
+      </view>
+    </view>
+  </form>
+
+  <view class='container_2'>
+    <view class='container_2_left'>
+      <text>搜索标签</text>
+    </view>
+    <view class='container_2_right' bindtap="clearLabel">
+      <text>清空标签</text>
+    </view>
+  </view>
+
+  <view wx:if="{{clearLabel}}">
+
+    <!-- <view class='container_3' wx:for="{{labels}}" wx:for-index="idx" wx:for-item="itemName">
+      <view class='container_3_item'>
+        <text class="actived_tag">场景</text>
+        <text class='no_actived_tag'>团建</text>
+        <text class="no_actived_tag">聚会</text>
+        <text class='no_actived_tag'>吃饭</text>
+        <text class="no_actived_tag">婚礼</text>
+        <text class='no_actived_tag'>户外</text>
+        <text class='no_actived_tag'>室内</text>
+      </view>
+    </view> -->
+    <!-- <view class='container_3'>
+      <view class='container_3_item'>
+        <text class="no_actived_tag">关系</text>
+        <text class='no_actived_tag'>朋友</text>
+        <text class="actived_tag">情侣</text>
+        <text class='no_actived_tag'>师生</text>
+        <text class="no_actived_tag">亲子</text>
+        <text class="no_actived_tag">上下级</text>
+      </view>
+    </view>
+
+    <view class='container_3'>
+      <view class='container_3_item'>
+        <text class="no_actived_tag">人数</text>
+        <text class='no_actived_tag'>1人</text>
+        <text class="no_actived_tag">2人</text>
+        <text class='no_actived_tag'>3人</text>
+        <text class="actived_tag">4人</text>
+        <text class="no_actived_tag">多人</text>
+      </view>
+    </view> -->
+
+    <block wx:for="{{labels}}" wx:key="index">
+    <view class='container_3'>
+      <!-- <view class='rv_text'>{{item.name}}</view> -->
+      <view class='container_3_item'>
+        <text class='{{0 == item.checked ? "actived_tag" : ""}} no_actived_tag'  data-curr='{{item.name}}' data-index='0' bindtap='checked' >{{item.name}}</text>
+        <view class='huhu'>
+        <block wx:for="{{item.tags}}" wx:key="index" wx:for-item="value">
+          <text class='{{index+1 == item.checked ? "actived_tag" : ""}} no_actived_tag'  data-curr='{{item.name}}' data-index='{{index+1}}' bindtap='checked' >{{value.tagName}}</text>
+        </block>
+        </view>
+      </view>
+    </view>
+    </block>
+  </view>
+
+</view>

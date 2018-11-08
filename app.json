@@ -1,0 +1,28 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/upload/upload",
+    
+    "pages/release_video/release_video",
+    "pages/personal_center/personal_center",
+    "pages/modification_infor/modification_infor",
+    "pages/video_detail/video_detail",
+    "pages/video_search/video_search",
+    "pages/video_detail_del/video_detail_del",
+    "pages/video_search_result/video_search_result",
+    "pages/logs/logs"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "方言视频",
+    "navigationBarTextStyle": "black"
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "connectSocket": 10000,
+    "uploadFile": 100000,
+    "downloadFile": 10000
+  },
+    "enablePullDownRefresh": true
+}

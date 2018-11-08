@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "个人中心",
+  "usingComponents": {
+    "demo-block": "../../Components/demo-block/index",
+    "van-tab": "../../Components/tab/index",
+    "van-tabs": "../../Components/tabs/index",
+    "i-icon": "../../Components/icon/index"
+  }
+}

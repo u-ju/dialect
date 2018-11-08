@@ -1,0 +1,199 @@
+<!--pages/personal_center/personal_center.wxml-->
+<import src="../../Components/tab-bar/index.wxml"/>
+<template is="tabBar" data="{{tabBar:bindData.tabBar}}"/>
+<view class='app'>
+<navigator url='../modification_infor/modification_infor?avatarUrl={{avatarUrl}}'>
+    <view class='head' bindtap="updatename">
+        <view class='person'>
+            <view class='portrait'>
+                <!-- <open-data type="userAvatarUrl"></open-data> -->
+                 <image src='{{avatarUrl}}' class=''></image>
+            </view>
+
+            <view class='size30 colorfff per_con'>
+                <view class="username">{{userInfo.nickname}}</view>
+                <view>{{userInfo.mobile}}</view>
+                <view class='flex_center'>
+                    <view class='flex_center'>
+                        <image src='../../images/icon_bofan@2x.png' class='image_play_num'></image>
+                        <text>{{userInfo.viewnums}}</text>
+                    </view>
+                    <view class='flex_center'>
+                        <image src='../../images/icon_dianzan@2x.png' class='image_click_num'></image>
+                        <text>{{userInfo.zans}}</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <i-icon type="enter" size="20" color="white"></i-icon>
+    </view>
+</navigator>
+<view>
+    <view class='detail_btn'>
+        <view  bindtap='ing_tab' data-id='0'>
+            <image src='{{shoucan[ing].img}}'></image>
+            <view class='{{shoucan[ing].id==1 ? "checked" : ""}}'>我的收藏</view>
+        </view>
+        <text class='xian'></text>
+        <view bindtap='ing_tab' data-id='1'>
+            <image src='{{fabu[ing].img}}'></image>
+            <view class='{{fabu[ing].id==1 ? "checked" : ""}}'>我的发布</view>
+        </view>
+    </view>
+    <view wx:if="{{videoList.length>0}}">
+        <!-- 我的收藏 -->
+        <view wx:if="{{shoucan[ing].id==1}}">
+            <view class='video'>
+                <block wx:for="{{videoList}}" wx:for-item="s_video">
+                    <navigator url='../video_detail/video_detail?vid={{s_video.id}}'>
+                        <view class='video-item'>
+                            <image src='{{s_video.thumb}}'></image>
+                            <!--<view class='badge zi'>自制</view>-->
+                            <text class='video_title'>{{s_video.title}}</text>
+                            <view class='label'>
+                                <text>{{s_video.tag}}</text>
+                                <!--<text>香奈儿</text>-->
+                            </view>
+                        </view>
+                    </navigator>
+                </block>
+
+            </view>
+            <!--没有数据不显示-->
+            <view class='more' wx:if="{{hasMoreData}}">
+                <text>加载更多</text>
+                <i-icon type="unfold" size="16" color="#666666"></i-icon>
+            </view>
+
+            <view class='more' wx:else="{{hasMoreData}}">
+                <text>没有更多数据</text>
+            </view>
+        </view>
+
+        <!-- 我的发布视屏 -->
+        <view wx:if="{{fabu[ing].id==1}}">
+            <view class='video'>
+
+                <block wx:for="{{videoList}}" wx:for-item="video">
+                    <view class='video-item'>
+                        <navigator url='../video_detail_del/video_detail_del?vid={{video.id}}'>
+                            <image src='{{video.thumb}}'></image>
+                        </navigator>
+                        <!--<view class='badge zi'>自制</view>-->
+                        <text class='video_title'>{{video.title}}</text>
+                        <view class='label'>
+                            <text>{{video.tag}}</text>
+                            <!--<text>香奈儿</text>-->
+
+                            <view wx:if="{{video.auditstatus == -1}}">
+                                <view class="check_container" data-id="{{video.id}}" bindtap='failAudit'>
+                                    <text class='check_no_text'>审核不通过</text>
+                                    <image src='{{error_notice && video.id==id ? "../../images/icon@check_no_down.png" : "../../images/icon@check_no_up.png"}}'></image>
+                                </view>
+                                <!-- 审核失败原因 -->
+                                <view class="check_notice_box" wx:if="{{error_notice && video.id==id}}">
+                                    {{video.auditmsg == null ? '未告知原因' : video.auditmsg}}
+                                </view>
+                            </view>
+
+                            <view style="margin-top:12rpx;" wx:if="{{video.auditstatus == 0}}">
+                                <text class='checking_text'>审核中</text>
+                            </view>
+
+                            <view style="margin-top:12rpx;" wx:if="{{video.auditstatus == 1}}">
+                                <text class='check_success_text'>审核通过</text>
+                            </view>
+                        </view>
+                    </view>
+                </block>
+
+                <!-- <view class='video-item'>
+                           <image src='../../images/img1@2x.png'></image>
+                           <view class='badge vip'>VIP</view>
+                           <text class='video_title'>“海南富婆”吴宣仪机场吐舌卖萌</text>
+                           <view class='label'>
+                               <text>香奈儿</text>
+                               <text>香奈儿</text>
+                               <view style="margin-top:12rpx;">
+                                   <text class='checking_text'>审核中</text>
+                               </view>
+                           </view>
+                       </view>
+
+                       <view class='video-item'>
+                           <image src='../../images/img1@2x.png'></image>
+                           <view class='badge zong'>综艺</view>
+                           <text class='video_title'>“海南富婆”吴宣仪机场吐舌卖萌</text>
+                           <view class='label'>
+                               <text>香奈儿</text>
+                               <text>香奈儿</text>
+                               <view style="margin-top:12rpx;">
+                                   <text class='check_success_text'>审核通过</text>
+                               </view>
+                           </view>
+                       </view>
+
+                       <view class='video-item'>
+                           <image src='../../images/img1@2x.png'></image>
+                           <view class='badge zong'>综艺</view>
+                           <text class='video_title'>“海南富婆”吴宣仪机场吐舌卖萌</text>
+                           <view class='label'>
+                               <text>香奈儿</text>
+                               <text>香奈儿</text>
+                               <view style="margin-top:12rpx;">
+                                   <text class='check_success_text'>审核通过</text>
+                               </view>
+                           </view>
+                       </view>-->
+            </view>
+
+            <!--没有数据不显示-->
+            <view class='more' wx:if="{{hasMoreData}}">
+                <text>加载更多</text>
+                <i-icon type="unfold" size="16" color="#666666"></i-icon>
+            </view>
+
+            <view class='more' wx:else="{{hasMoreData}}">
+                <text>没有更多数据</text>
+            </view>
+
+        </view>
+        
+    </view>
+    <view wx:else>
+
+        <!--默认收藏图片-->
+        <view data-id='0' wx:if="{{shoucan[ing].id==1}}">
+            <view class='collect_container'>
+                <view class="collect-row-center">
+                    <view class='collect_circle'>
+                        <image src='../../images/collect@2x.png'></image>
+                    </view>
+                </view>
+                <view class='collect-row-center'>
+                    <view class='collect_circle_text'>
+                        亲，您还没有收藏喔~
+                    </view>
+                </view>
+            </view>
+        </view>
+
+
+        <!--默认发布图片-->
+        <view data-id='1' wx:if="{{fabu[ing].id==1}}">
+            <view class='collect_container'>
+                <view class="collect-row-center">
+                    <view class='collect_circle'>
+                        <image src='../../images/publish@2x.png'></image>
+                    </view>
+                </view>
+                <view class='collect-row-center'>
+                    <view class='collect_circle_text'>
+                        亲，您还没有发布作品喔~
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+</view>

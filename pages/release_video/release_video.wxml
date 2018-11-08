@@ -1,0 +1,94 @@
+<!--pages/release_video/release_video.wxml-->
+<import src="../../Components/tab-bar/index.wxml"/>
+<template is="tabBar" data="{{tabBar:bindData.tabBar}}"/>
+<view>
+  <view class="margin_bottom--100 marginbtm20" wx:for="{{items}}" wx:key="unique" wx:if="{{tempFilePath}}">
+    <view class="video-container">
+        <view  class="video" data-id="{{item.id}}" bindtap="videoPlay" >
+          <video  id="myVideo" style="width: 750rpx;height: calc(9 * 750rpx / 16);background-color: #333333" id="myVideo"  src="{{tempFilePath}}"
+           objectFit="cover"  controls>
+            <!--src="{{item.src}}"-->
+          <cover-view class="img-wrap"  bindtap="del_video">
+              <cover-image class="img" src="../../images/icon_quxiao@2x.png"/>
+          </cover-view>
+          </video>
+          <!-- <view wx:else >
+              <image src='../../images/icon_quxiao@2x.png' class='del_video'  bindtap="del_video"></image>
+              <image class="model-img" style="width: 750rpx;height: calc(9 * 750rpx / 16);" mode="aspectFill" src="{{item.poster}}"></image>
+              <view class="model-btn">
+                      <view class="play-icon"></view>
+              </view>
+          </view> -->
+        </view>
+    </view>
+  </view>
+  <view wx:if="{{tempFilePath==''}}" class='wei_video marginbtm20'>
+    <image class="model-img" style="width: 750rpx;height: calc(9 * 750rpx / 16);" mode="aspectFill" src="../../images/img@2x.png"></image>
+    <view class='loacl' bindtap="uploadVideo">
+      <i-icon type="add" size="18" color="#fff"></i-icon>
+      <text>本地视频</text>
+    </view>
+  </view>
+
+  <form bindsubmit="formSubmit">
+    <view class='padding24'>
+    <view class='flex_center'>
+      <view class='rv_text'>标题</view>
+      <input placeholder='请输入游戏名称,10字符以内' class='rv_input' name="rv_input" value='{{rv_input}}' maxlength='10'></input>
+    </view>
+
+    <block wx:for="{{labels}}" wx:key="index">
+      <view class='flex_btw'>
+        <view class='rv_text'>{{item.name}}</view>
+        <view class='rv_rigth_item hhh'>
+          <block wx:for="{{item.tags}}" wx:key="index" wx:for-item="value">
+            <text class='{{index == item.checked ? "checked" : ""}}' data-curr='{{item.name}}' data-index='{{index}}' data-usertag="{{value.tagName}}" bindtap='checked' >{{value.tagName}}</text>
+          </block>
+        </view>
+      </view>
+    </block>
+
+    <view class='flex_center'>
+      <view class='rv_text'>标签</view>
+      <view class='rv_rigth_item flex_center'>
+        <view wx:for="{{bq}}" class='bq_name checked'>
+          <text class='checked' >{{item}}</text>
+          <image src='../../images/icon_quxiao@2x1.png' bindtap='del_bq' data-name='{{item}}'></image>
+        </view>
+        <view class='biaoqian flex_center ' bindtap='add_pic' wx:if="{{add_hidden==1}}">
+        <block wx:if="{{isBtnHide}}">
+          <image src='../../images/icon_xinzeng@2x.png'></image>
+        </block>
+        </view>
+        <view class='label_add flex_center' wx:else>
+          <block wx:if="{{isBtnHide}}">
+            <input name='label' value='{{label}}' bindinput='label' maxlength='4'></input>
+            <view bindtap='add'>添加</view>
+          </block>
+        </view>
+      </view>
+    </view>
+    <view class='flex_center flex'>
+      <view class='rv_text'>规则</view>
+      <textarea name="rule" placeholder='请简要介绍游戏规则，1000字符以内' maxlength="1000" placeholder-class='textarea_ph'></textarea>
+    </view>
+    <view class='flex_center flex'>
+      <view class='rv_text'>链接</view>
+      <view class='addinput'>
+        <block wx:for="{{link}}" wx:key="index" wx:for-item="link">
+          <view class='input_link'>
+            <input class='rv_input' name="{{link.linkname}}" bindinput="iptLinkUrl"   data-linkname='{{link.index}}' placeholder='请输入相关链接'  value='' ></input>
+            <image wx:if="{{link.index>1}}" src='../../images/icon_shanchu1@2x.png' bindtap='del_link' data-linkname='{{link.linkname}}'></image>
+          </view>
+        </block>
+        <view class='biaoqian' bindtap='add_link'>
+          <image src='../../images/icon_xinzeng@2x.png'></image>
+        </view>
+      </view>
+    </view>
+    <view class='colorCCC'>*为了帮助审核人员更好的理解和制定游戏规则，可添加该游戏的相关链接</view>
+    <button class='upload' formType="submit" disabled="{{clickOne}}">确认上传</button>
+  </view>
+  </form>
+<view class='height130'></view>
+</view>

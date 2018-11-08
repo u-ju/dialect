@@ -1,0 +1,84 @@
+/* pages/video_detail/video_detail.wxss */
+.video{
+	/* margin-bottom: 40rpx; */
+	position: relative;
+  /* background-color: rgba(0, 0, 0, 1) */
+}
+.model-img{
+	width: 100%;
+	height: 420rpx;
+}
+.model-btn{
+	position:absolute;
+    left:0;
+    top:0;
+    bottom:0;
+    right:0;
+    margin:auto;
+    width:100rpx;
+    height:100rpx;
+    border-radius:50%;
+    /* background-color: rgba(0,0,0,.3); */
+    border: 4px solid white;
+}
+.play-icon{
+    margin:28rpx 42rpx;
+    border-top:26rpx solid transparent;
+    border-left:36rpx solid #fff;
+    border-bottom:22rpx solid transparent;
+}
+.text{
+  width: 100%;
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+  background-color: red;
+  color: #fff;
+  position: fixed;
+  bottom: 0;
+}
+.title{
+  font-weight: bold;
+  color: #333;
+  font-size: 34rpx;
+}
+.label{
+  display: block;
+  color: #666;
+  font-size: 24rpx;
+  margin: 18rpx 0 40rpx 0;
+}
+.detail_btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ccc;
+}
+.detail_btn image{
+  width: 44rpx;
+  height: 44rpx;
+}
+.title_con{
+  padding: 30rpx 24rpx;
+}
+.detail_btn>view{
+  width: 80rpx;
+  text-align: center;
+  margin: 0 70rpx 0 70rpx;
+}
+.introduction{
+  padding: 24rpx;
+  border-top: 1px solid #ccc;
+}
+.introduction .title{
+  font-size: 28rpx;
+  margin-bottom: 30rpx;
+}
+.introduction text{
+  color: #666666;
+  font-size: 24rpx;
+  line-height: 40rpx;
+}
+.checked{
+  color: #F1843B;
+}

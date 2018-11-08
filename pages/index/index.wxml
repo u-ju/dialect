@@ -1,0 +1,83 @@
+<!--index.wxml-->
+
+<view wx:if="{{fenhao}}" class='bg3'>
+
+  <view class='tck'>
+    <view class='wxts'>温馨提示</view>
+    <view class='xian'></view>
+    <view class='size24'>由于您发布的作品违反相关规定</view>
+    <view class='bold'>您已被封号！</view>
+  </view>
+</view>
+<view wx:if="{{wxid}}">
+<import src="../../Components/tab-bar/index.wxml"/>
+<template is="tabBar" data="{{tabBar:bindData.tabBar}}"/>
+<view class="tab">
+<!-- <demo-block title="横向滚动"> -->
+<van-tabs bind:click="onTap">
+    <van-tab wx:for="{{tab}}" wx:key="index" data-a="{{item.name}}" title="{{item.name}}">
+        <view class="content">
+            <view class='search'>
+                <view class='search_icon'>
+                    <image src='../../images/sousuo@2x.png'></image>
+                </view>
+                <navigator url="../video_search/video_search">
+                    <!-- <input type='text' disabled='disabled' class='search_input' placeholder='请输入想观看的内容'
+                           placeholder-class='search_input_con'></input> -->
+                    <view class='search_input search_input_con'>请输入想观看的内容</view>
+                </navigator>
+            </view>
+            <view class='title'>
+                <image src='../../images/icon_video@2x.png'></image>
+                <text>为您精选</text>
+            </view>
+            <view class='video'>
+                <!-- <blcok> -->
+
+                <navigator url='../video_detail/video_detail?vid={{item.id}}' wx:for="{{videoList}}">
+                    <view class='video-item'>
+                        <image mode='aspectFill' src='{{item.thumb}}'></image>
+                        <!--<view class='badge zi'>自制</view>-->
+                        <text class='video_title'>{{item.title}}</text>
+                        <view class='label'>
+                            <text>{{item.tag}}</text>
+                        </view>
+                    </view>
+                </navigator>
+
+             <!-- <navigator url='../video_detail_del/video_detail_del'>
+                    <view class='video-item'>
+                      <image src='../../images/img1@2x.png'></image>
+                      <view class='badge zong'>综艺</view>
+                      <text class='video_title'>“海南富婆”吴宣仪机场吐舌卖萌 </text>
+                      <view class='label'>
+                        <text>香奈儿</text>
+                        <text>香奈儿</text>
+                      </view>
+                    </view>
+                  </navigator>-->
+
+            </view>
+            <!--没有数据不显示-->
+            <view class='more' wx:if="{{hasMoreData}}">
+                <text>加载更多</text>
+                <i-icon type="unfold" size="16" color="#666666"></i-icon>
+            </view>
+
+            <view class='more' wx:else="{{hasMoreData}}">
+                <text>没有更多数据</text>
+            </view>
+        </view>
+    </van-tab>
+</van-tabs>
+</view>
+<view class='height130'></view>
+</view>
+
+<view class='login' wx:else>
+  <view class='miaoshu'>登录后享受更多功能</view>
+  <button class='button' type='primary' open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo">
+      <image src='../../images/wx.png'></image>
+      <text>授权登录</text>
+  </button>
+</view>

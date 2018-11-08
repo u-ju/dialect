@@ -1,0 +1,25 @@
+<template name="tabBar">
+<view class='tabar'>
+  <view class='big_cricle'>
+  </view>
+  <view class='yuan'></view>
+  <navigator open-type="redirect" url="../../pages/release_video/release_video">
+  <view class="tabBar-item tabBar_center">
+    <view class='sm_cricle'>
+      <i-icon type="add" size="32" color="#fff" ></i-icon>
+    </view>
+    <view class="tabBartext">发布</view>   
+  </view>
+  </navigator>
+  <view class="tabBar">
+    <block wx:for="{{tabBar}}" wx:for-item="item" wx:key="tabBar">
+      <view class="tabBar-item">
+        <navigator open-type="redirect" url="{{item.pagePath}}">
+          <view><image class="icon" src='{{item.iconPath}}'></image></view>
+          <view class="{{item.current== 1 ? 'tabBartext' :''}}">{{item.text}}</view>
+        </navigator>  
+      </view>
+    </block>
+  </view>
+</view>
+</template>

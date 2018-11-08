@@ -1,0 +1,12 @@
+/**app.wxss**/
+@import "/Components/tab-bar/index.wxss";
+view{
+  font-size: 24rpx;
+  font-family: "PingFang SC";
+}
+.height130{
+  height: 150rpx;
+}
+.app{
+  padding-bottom: 150rpx;
+}

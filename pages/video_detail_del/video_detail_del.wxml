@@ -1,0 +1,69 @@
+<!--pages/video_detail/video_detail.wxml-->
+<view>
+  <view class="margin_bottom--100" wx:for="{{items}}" wx:key="unique">
+    <view class="video-container">
+      <view class="video" data-id="{{item.id}}" bindtap="videoPlay">
+        <video wx:if="{{curr_id == item.id}}" id="myVideo" style="width: 750rpx;height: calc(9 * 750rpx / 16);" id="myVideo" src="{{item.src}}" poster="{{item.poster}}" objectFit="cover" controls></video>
+        <view wx:else>
+          <image class="model-img" style="width: 750rpx;height: calc(9 * 750rpx / 16);" mode="aspectFill" src="{{item.poster}}"></image>
+          <view class="model-btn">
+            <view class="play-icon"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+
+  <view class='title_con'>
+    <view class='flex_center_btW'>
+      <view class='flex_center_shenhe'>
+        <view>
+          <view class='flex_center flex_btw'>
+            <view class='title'>{{detail.title}}</view>
+            <!-- <view style='margin-left:170rpx;'> -->
+            <view class='flex_center' wx:if="{{detail.auditstatus == 1}}">
+                 <view class='cricle' style='margin-left:270rpx;'></view>
+                 <text>审核通过</text>
+            </view>
+            <view  class='flex_center' wx:if="{{detail.auditstatus == -1}}">
+                  <view class='cricle' style='margin-left:270rpx;'></view>
+                  <text>审核不通过</text>
+            </view>
+            <view  class='flex_center' wx:if="{{detail.auditstatus == 0}}">
+                  <view class='cricle' style='margin-left:270rpx;'></view>
+                  <text>审核中</text>
+            </view>
+            <!-- </view> -->
+          </view>
+        </view>
+
+        <text class='label' decode="{{true}}" space="{{true}}">{{tag}}</text>
+      </view>
+
+    </view>
+
+    <view class='flex_center_btW caozuo'>
+      <view class="flex_trash_dianzan">
+        <view  class='dianzan flex_center' data-id='{{dianzan.id}}'><view class="flex_center_btW3">
+         <image src='{{dianzan.img}}'></image>
+          <text class='{{dianzan.id==1 ? "checked" : ""}}'>{{detail.zans}}</text>
+        </view>
+
+        </view>
+        <view class='flex_center_btW2'>
+          <view bindtap='trash_video'>
+            <image src='../../images/icon_shanchu@2x.png'></image>
+            <view>删除</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+
+  <view class='introduction'>
+    <view class='title'>游戏规则</view>
+    <text decode="{{true}}" space="{{true}}">{{detail.rules}}</text>
+  </view>
+</view>

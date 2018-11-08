@@ -1,0 +1,113 @@
+<view>
+    <view class="video-container">
+
+        <block wx:for="{{videoList}}">
+            <navigator url="../video_detail/video_detail?vid={{item.id}}">
+                <view class="video_item">
+                    <view class="video_item_left">
+                        <image src='../../images/img1@2x.png'></image>
+                    </view>
+                    <view class="video_item_right">
+                        <view class="video_item_right_top">
+                            <text class="video_title">{{item.title}}</text>
+                        </view>
+                        <view class="video_item_right_bottom">
+
+                            <text class="video_tag" wx:for="{{item.tag}}" wx:for-item="tag">{{tag}}</text>
+                            <!--<text class="video_tag">师生</text>-->
+                            <!--<text class="video_tag">4人</text>-->
+                        </view>
+                    </view>
+                </view>
+            </navigator>
+        </block>
+
+        <!--    <view class="video_item">
+              <view class="video_item_left">
+                <image src='../../images/img1@2x.png'></image>
+              </view>
+              <view class="video_item_right">
+                <view class="video_item_right_top">
+                  <text class="video_title">请下载自己对应的版本号，即32位系统的请下载32位系统。</text>
+                </view>
+                <view class="video_item_right_bottom">
+                  <text class="video_tag">聚会</text>
+                  <text class="video_tag">师生</text>
+                  <text class="video_tag">4人</text>
+                </view>
+              </view>
+            </view>-->
+
+        <!--<view class="video_item">
+          <view class="video_item_left">
+            <image src='../../images/img1@2x.png'></image>
+          </view>
+          <view class="video_item_right">
+            <view class="video_item_right_top">
+              <text class="video_title">请下载自己对应的版本号，即32位系统的请下载32位系统。</text>
+            </view>
+            <view class="video_item_right_bottom">
+              <text class="video_tag">聚会</text>
+              <text class="video_tag">师生</text>
+              <text class="video_tag">4人</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="video_item">
+          <view class="video_item_left">
+            <image src='../../images/img1@2x.png'></image>
+          </view>
+          <view class="video_item_right">
+            <view class="video_item_right_top">
+              <text class="video_title">请下载自己对应的版本号，即32位系统的请下载32位系统。</text>
+            </view>
+            <view class="video_item_right_bottom">
+              <text class="video_tag">聚会</text>
+              <text class="video_tag">师生</text>
+              <text class="video_tag">4人</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="video_item">
+          <view class="video_item_left">
+            <image src='../../images/img1@2x.png'></image>
+          </view>
+          <view class="video_item_right">
+            <view>
+              <text class="video_title">请下载自己对应的版本号，即32位系统的请下载32位系统。</text>
+            </view>
+            <view class="video_item_right_bottom">
+              <text class="video_tag">聚会</text>
+              <text class="video_tag">师生</text>
+              <text class="video_tag">4人</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="video_item">
+          <view class="video_item_left">
+            <image src='../../images/img1@2x.png'></image>
+          </view>
+          <view class="video_item_right">
+            <view class="video_item_right_top">
+              <text class="video_title">请下载自己对应的版本号，即32位系统的请下载32位系统。</text>
+            </view>
+            <view class="video_item_right_bottom">
+              <text class="video_tag">聚会</text>
+              <text class="video_tag">师生</text>
+              <text class="video_tag">4人</text>
+            </view>
+          </view>
+        </view>-->
+
+        <view class='more' style="margin-top:10rpx;" wx:if="{{hasMoreData}}">
+            <text>加载更多</text>
+            <i-icon type="unfold" size="16" color="#666666"></i-icon>
+        </view>
+        <view class='more' style="margin-top:10rpx;" wx:else="{{hasMoreData}}">
+            <text>暂时没有相关数据</text>
+        </view>
+    </view>
+</view>

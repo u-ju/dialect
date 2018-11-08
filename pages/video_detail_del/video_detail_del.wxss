@@ -1,0 +1,75 @@
+/* pages/video_detail/video_detail.wxss */
+@import '../video_detail/video_detail';
+
+.cricle {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  background-color: #04bc23;
+  margin-right: 12rpx;
+}
+
+.flex_center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.flex_center_btW {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex_center_btW2>view {
+  margin-left: 78rpx;
+}
+
+.flex_center_btW2>view>view {
+  color: #f1843b;
+  font-size: 24rpx;
+}
+
+.flex_center_btW image {
+  width: 44rpx;
+  height: 44rpx;
+}
+
+.flex_trash_dianzan {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.flex_center_btW3 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100rpx;
+  align-items: center;
+}
+.dianzan  .flex_center_btW3 image{
+margin:0
+}
+.dianzan image {
+  margin-right: 8rpx;
+}
+
+.caozuo {
+  color: #999;
+}
+
+.label {
+  margin-bottom: 30rpx;
+}
+
+.title_con {
+  padding-bottom: 70rpx;
+}
+.flex_center_btW>view{
+  width: 100%;
+}
+.flex_btw{
+  justify-content: space-between;
+}
