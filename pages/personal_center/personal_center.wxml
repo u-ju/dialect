@@ -6,8 +6,9 @@
     <view class='head' bindtap="updatename">
         <view class='person'>
             <view class='portrait'>
-                <!-- <open-data type="userAvatarUrl"></open-data> -->
-                 <image src='{{avatarUrl}}' class=''></image>
+                
+                 <image wx:if="{{avatarUrl}}" src='{{avatarUrl}}' class=''></image>
+                 <open-data wx:else type="userAvatarUrl"></open-data>
             </view>
 
             <view class='size30 colorfff per_con'>
@@ -47,7 +48,7 @@
                 <block wx:for="{{videoList}}" wx:for-item="s_video">
                     <navigator url='../video_detail/video_detail?vid={{s_video.id}}'>
                         <view class='video-item'>
-                            <image src='{{s_video.thumb}}'></image>
+                            <image  mode='aspectFit' src='{{s_video.thumb}}'></image>
                             <!--<view class='badge zi'>自制</view>-->
                             <text class='video_title'>{{s_video.title}}</text>
                             <view class='label'>
@@ -77,7 +78,7 @@
                 <block wx:for="{{videoList}}" wx:for-item="video">
                     <view class='video-item'>
                         <navigator url='../video_detail_del/video_detail_del?vid={{video.id}}'>
-                            <image src='{{video.thumb}}'></image>
+                            <image  mode='aspectFit' src='{{video.thumb}}'></image>
                         </navigator>
                         <!--<view class='badge zi'>自制</view>-->
                         <text class='video_title'>{{video.title}}</text>

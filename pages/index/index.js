@@ -1,6 +1,6 @@
 //index.js
 // 公共部分
-const app = getApp()
+var app = getApp()
 var template = require('../../Components/tab-bar/index.js');
 var wxUtil = require("../../utils/util.js")
 import Page from '../../common/page';
@@ -18,7 +18,8 @@ Page({
         // 数据空的情况
         isEmptyData: false,
         wxid:"",
-      fenhao:1
+      fenhao:1,
+        name_index: 0
     },
     //事件处理函数
     handleChangeScroll({detail}) {
@@ -27,11 +28,11 @@ Page({
         });
     },
     onLoad: function () {
-        wx.setStorageSync("wxid", "")
+        // wx.setStorageSync("wxid", "")
         
-        var wxid = wx.getStorageSync("wxid")||""
+        var wxid = wxUtil.getUserId()
+        // var wxid = wx.getStorageSync("wxid")
         var that = this;
-      
         template.tabbar("tabBar", 0, this) //0表示第一个tabbar
         that.setData({
           wxid: wxid
@@ -67,11 +68,44 @@ Page({
             data: {
                 pageNo: that.data.pageNo,
                 pageSize: that.data.pageSize,
-                tag: tagName
+                tag: tagName,
+                wxid: that.data.wxid
             }
         };
+        console.log(data)
         this.getMoreData(data, that)
     },
+    status(){
+      var that = this
+      wx.request({
+        url: app.globalData.api_url + "/user/status",
+        data: {
+          wxid:that.data.wxid
+        },
+        method: "post",
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' // 默认值
+        },
+        success: function (res) {
+          if (res.data.result == "success") {
+            console.log(res);
+            that.setData({
+              fenhao:res.data.data
+            })
+          } else {
+            console.log(res);
+            
+          }
+        },
+        fail: function (e) {
+          console.log(e);
+        }
+      });
+    },
+  onShow: function () {
+    var that = this;
+    this.status()
+  },
   bindGetUserInfo(e) {
     console.log(e.detail)
     wx.showLoading()
@@ -134,10 +168,25 @@ Page({
      * @param data
      * @param that
      */
+  link_detail(e){
+    console.log(e.currentTarget.dataset.ismy)
+    if (e.currentTarget.dataset.ismy==1){
+      wx.navigateTo({
+        url: '../video_detail_del/video_detail_del?vid=' + e.currentTarget.dataset.vid,
+      })
+      wx.showLoading()
+    }else{
+      wx.navigateTo({
+        url: '../video_detail/video_detail?vid=' + e.currentTarget.dataset.vid,
+      })
+      wx.showLoading()
+    }
+  },
     getMoreData: function (data, that) {
         wxUtil.loading();
         wxUtil.postJSON(data, function (res) {
             if (res.statusCode == 200 && res.data.result == "success") {
+              console.log(res)
                 var videoList2 = res.data.data.list;
 
                 if (videoList2.length > 0) {
@@ -184,6 +233,8 @@ Page({
         var that = this;
         var tagName = (that.data.label_name == "推荐") ? "" : that.data.label_name;
 
+
+        console.log(that.data.name_index)
         if (that.data.hasMoreData) {
             var data = {
                 apiUrl: app.globalData.api_url + "/top/list",
@@ -191,7 +242,8 @@ Page({
                 data: {
                     pageNo: that.data.pageNo,
                     pageSize: that.data.pageSize,
-                    tag: tagName
+                    tag: tagName,
+                  wxid: that.data.wxid
                 }
             };
 
@@ -210,7 +262,14 @@ Page({
         });
 
         var tagName = (that.data.label_name == "推荐") ? "" : that.data.label_name;
-
+        var name_index = 0;
+        if(that.data.label_name!="推荐"){
+            name_index=1
+        }
+        console.log(name_index)
+        that.setData({
+            name_index:name_index
+        })
         if (that.data.hasMoreData) {
             var data = {
                 apiUrl: app.globalData.api_url + "/top/list",
@@ -218,16 +277,17 @@ Page({
                 data: {
                     pageNo: that.data.pageNo,
                     pageSize: that.data.pageSize,
-                    tag: tagName
+                    tag: tagName,
+                  wxid: that.data.wxid
                 }
             };
             // 加载更多数据
             this.getMoreData(data, that);
         }
 
-        console.log(' ------------------ ');
-        console.log(that.data.label_name);
-        console.log(' ------------------ ');
+        // console.log(' ------------------ ');
+        // console.log(that.data.label_name);
+        // console.log(' ------------------ ');
     },
 
     /**

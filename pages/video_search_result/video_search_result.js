@@ -54,9 +54,10 @@ Page({
                 pageSize: that.data.pageSize,
                 title: options.title,
                 tag: options.tag,
+                wxid:wxUtil.getUserId()
             }
         }
-
+      console.log(form)
         // 分页加载内容
         this.getMoreData(form, that);
     },
@@ -71,7 +72,7 @@ Page({
         wxUtil.postJSON(data, function (res) {
             if (res.statusCode == 200 && res.data.result == "success") {
                 var videoList2 = res.data.data.list;
-
+                console.log(res)
                 if (videoList2.length > 0) {
                     for (let i in videoList2) {
                         videoList2[i].tag = videoList2[i].tag.split(",");

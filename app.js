@@ -17,7 +17,6 @@ App({
                         success: res => {
                             // 可以将 res 发送给后台解码出 unionId
                             this.globalData.userInfo = res.userInfo;
-
                             // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
                             // 所以此处加入 callback 以防止这种情况
                             if (this.userInfoReadyCallback) {
@@ -31,9 +30,9 @@ App({
     },
     globalData: {
         userInfo: null,
-        api_url: 'http://192.168.1.195:9999/wechat',
-        img_url: 'http://192.168.1.195:9999/wechat/view/',
-      // api_url:'https://wbyb.wboyuan.com/wechat',
-      // img_url: 'https://wbyb.wboyuan.com/wechat/view/',
+      //   api_url: 'http://192.168.1.195:20010/wechat',
+      // img_url: 'http://192.168.1.195:20010/wechat/view/',
+      api_url:'https://wbyb.wboyuan.com/wechat',
+      img_url: 'https://wbyb.wboyuan.com/wechat/view/',
     }
 })

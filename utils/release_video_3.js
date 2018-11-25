@@ -2,8 +2,6 @@
 const app = getApp();
 var wxUtil = require("../../utils/util.js")
 var template = require('../../Components/tab-bar/index.js');
-// const VodUploader = require('../../utils/vod-web-sdk-v5.1');
-const uploadImage = require('../../utils/uploadAliyun.js');
 Page({
     /**
      * 页面的初始数据
@@ -48,7 +46,7 @@ Page({
         click:true,
         add_link:1,
         add_link_fir:0,
-        fileName:""
+        fileName:"huhu"
     },
     outbtn(){
         this.setData({
@@ -162,58 +160,31 @@ Page({
 
 
     /**
-     * 用户上传视频
+     * 用户上传视屏
      */
     uploadVideo: function () {
-        var that = this,success_num=0;
-        console.log(wxUtil.now_time())
-        var fileName = wxUtil.now_time()+".mp4";
+        var that = this;
+        var fileName = wxUtil.formatTime(new Date());
         console.log(fileName)
         wx.chooseVideo({
             sourceType: ['album', 'camera'],
-            // compressed:false,
+            compressed:false,
             success(res) {
-                that.setData({
-                    fileName:fileName
-                })
                 console.log(res);
                 var tempFilePaths = [];
                 tempFilePaths.push(res.tempFilePath);
                 console.log(tempFilePaths);
                 var tempFilesSize = res.size;
-              console.log(tempFilesSize / (1024 * 1024) )
                 if (tempFilesSize <= 25 * 1024 * 1024) {
                     if (that.allowUploadFormat(tempFilePaths)) {
-                      // wxUtil.info_dialog("正在上传视频中 ....")
-                      // wxUtil.loading("正在上传视频中 ....");
-                      wx.showLoading({
-                        title: '正在上传视频中 ....',
-                      })
-                        uploadImage(
-                            {
-                                filePath: res.tempFilePath,
-                                dir: "/",
-                                fileName:fileName,
-                                success: function (res) {
-                                    console.log("阿里云上传成功")
-                                    success_num= success_num+1
-                                },
-                                fail: function (res) {
-                                    console.log("阿里云上传失败")
-                                    console.log(res)
-                                    that.del_video_name()
-                                }
-                            })
-                        
+                        wxUtil.loading("正在上传视频中 ....");
                         wx.uploadFile({
                             url: app.globalData.api_url + "/fileUpload", // 后台 java 上传接口
                             filePath: res.tempFilePath,
                             name: 'file',
-                            formData: { wxid: wxUtil.getUserId(), fileName: fileName},
+                            formData: { wxid: wxUtil.getUserId() },
                             success(res) {
-                                console.log("线下上传成功")
                                 console.log(res);
-                                success_num= success_num+1
                                 var resp_data = JSON.parse(res.data); // JSON string 转换为 JSON object , resp_data 响应的数据包
                                 if (resp_data.result == "success") {
                                     // 检测文件大小不合法提示
@@ -223,28 +194,29 @@ Page({
                                         return false;
                                     } else if (resp_data.status == 2) {
                                         // 文件大小不合法
-                                        wxUtil.info_dialog("请选择小于25MB的视频哦~");
+                                        wxUtil.info_dialog("请选择小于25MB的视屏哦~");
                                         return false;
                                     }
 
                                     wxUtil.info_dialog("视频上传已完成!");
                                     console.log('-------------- upload finished -----------');
-                                    let videoUrl = resp_data.data.url;  // 视频播放地址
-                                    let picUrl = app.globalData.img_url + resp_data.data.thumbSrc;    // 视频封面地址
+                                    let videoUrl = resp_data.data.url;  // 视屏播放地址
+                                    let picUrl = app.globalData.img_url + resp_data.data.thumbSrc;    // 视屏封面地址
 
-                                    //  视频播放地址 , 视频封面地址 -> 相对路径
+                                    //  视屏播放地址 , 视屏封面地址 -> 相对路径
                                     let video_url = resp_data.data.fileSrc;
                                     let pic_url = resp_data.data.thumbSrc;
 
-                                    // console.log(videoUrl);
-                                    console.log('------------------------');
-                                    console.log(tempFilePaths[0]);
+                                    console.log(videoUrl);
+                                    console.log(resp_data);
+                                    console.log(picUrl);
+
                                     var item = [];
                                     item.push({
                                         id: resp_data.data.id,
                                         src: videoUrl,
                                         poster: picUrl,
-                                        video_url: tempFilePaths[0],
+                                        video_url: video_url,
                                         pic_url: pic_url
                                     });
 
@@ -256,14 +228,12 @@ Page({
                                     console.log(that.data.items)
                                 } else {
                                     wxUtil.info_dialog("视频上传异常!");
-                                    console.log("线下上传失败")
-                                    that.del_video_name()
                                 }
                             },
                             fail: function (res) {
-                                // console.log('视频上传网络超时.')
+                                // console.log('视屏上传网络超时.')
                                 console.log(res)
-                                wxUtil.info_dialog("视频上传网络超时!");
+                                wxUtil.info_dialog("视屏上传网络超时!");
                             }
 
                         });
@@ -272,7 +242,7 @@ Page({
                         wxUtil.info_dialog("视频上传格式只允许MP4!")
                     }
                 } else {
-                    wxUtil.info_dialog("请选择小于25MB的视频哦~");
+                    wxUtil.info_dialog("请选择小于25MB的视屏哦~");
                 }
 
                 console.log(tempFilesSize)
@@ -294,7 +264,7 @@ Page({
      * @returns {boolean} true 检测通过 false 检测失败
      */
     allowUploadFormat: function (tempFiles = []) {
-        // 允许上传的视频格式
+        // 允许上传的视屏格式
         var allow_head_photo = ['.mp4'];
 
         for (let idx in tempFiles) {
@@ -310,7 +280,7 @@ Page({
     },
 
     /**
-     * 视频播放
+     * 视屏播放
      * @param e
      */
     videoPlay(e) {
@@ -485,26 +455,6 @@ Page({
         }
 
     },
-    del_video_name(){
-        var that = this;
-        var form = {
-            apiUrl: app.globalData.api_url + "/file/name",  //  视频发布接口
-            data: {
-                wxid: that.data.wxid,
-                fileName: that.data.fileName
-            }
-        }
-        wxUtil.postJSON(form, function (res) {
-            // 防止用户多次提交
-            // that.btnDisable(that);
-            console.log(res)
-            // 用户发布视频成功后, 启用按钮
-        });
-        var items = [{ id: 1, src: '', poster: '' }]
-        that.setData({
-            items: items
-        })
-    },
     del_video() {
         var that = this;
         wx.showModal({
@@ -514,7 +464,7 @@ Page({
 
                 } else {
                     var form = {
-                        apiUrl: app.globalData.api_url + "/file/delete",  //  视频发布接口
+                        apiUrl: app.globalData.api_url + "/file/delete",  //  视屏发布接口
                         data: {
                             wxid: that.data.wxid,
                             id: that.data.items[0].id
@@ -522,9 +472,9 @@ Page({
                     }
                     wxUtil.postJSON(form, function (res) {
                         // 防止用户多次提交
-                        // that.btnDisable(that);
+                        that.btnDisable(that);
                         console.log(res)
-                        // 用户发布视频成功后, 启用按钮
+                        // 用户发布视屏成功后, 启用按钮
                     });
                     var items = [{ id: 1, src: '', poster: '' }]
                     that.setData({
@@ -536,7 +486,7 @@ Page({
         })
     },
     /**
-     * 用户发布视频信息
+     * 用户发布视屏信息
      * @param ev
      */
     // formSubmit: function (e){
@@ -562,8 +512,8 @@ Page({
         var title = dataForm.rv_input.trim();
         var rule = dataForm.rule.trim();
         var links = [];
-        var video_url = (items.video_url != undefined) ? items.video_url : ''; // 用户上传视频的url
-        var pic_url = (items.pic_url != undefined) ? items.pic_url : ''; // 用户上传视频的封面url
+        var video_url = (items.video_url != undefined) ? items.video_url : ''; // 用户上传视屏的url
+        var pic_url = (items.pic_url != undefined) ? items.pic_url : ''; // 用户上传视屏的封面url
 
         var lables = that.data.labels;
 
@@ -596,15 +546,15 @@ Page({
             return false;
         }
 
-        // 验证视频上传是否完成
+        // 验证视屏上传是否完成
         if (!that.data.uploadFinish) {
-            wxUtil.info_dialog("请选择要上传的视频~02");
+            wxUtil.info_dialog("请选择要上传的视屏~02");
             return false;
         }
 
-        //  用户必须上传视频,才能发布小视频
+        //  用户必须上传视屏,才能发布小视频
         if (video_url == "" || pic_url == "") {
-            wxUtil.info_dialog("请选择要上传的视频~01");
+            wxUtil.info_dialog("请选择要上传的视屏~01");
             return false;
         }
 
@@ -648,7 +598,7 @@ Page({
 
         // 接口接收表单名称 [ title, pic_url, video_url, rule, my_label, links, tags ]
         var form = {
-            apiUrl: app.globalData.api_url + "/publish/save",  //  视频发布接口
+            apiUrl: app.globalData.api_url + "/publish/save",  //  视屏发布接口
             data: {
                 wxid: wxid,
                 title: title,
@@ -675,9 +625,9 @@ Page({
             wxUtil.postJSON(form, function (res) {
                 // 网络延迟问题，防止多次提交
                 that.btnEnable(that);
-                // 用户发布视频成功后, 启用按钮
+                // 用户发布视屏成功后, 启用按钮
                 if (res.data.result == "success") {
-                    // 用户发布视频成功后, 启用按钮
+                    // 用户发布视屏成功后, 启用按钮
                     that.btnDisable(that);
                     wxUtil.info_dialog("开心, 发布视频成功~");
 

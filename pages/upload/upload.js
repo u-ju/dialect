@@ -19,7 +19,8 @@ Page({
         width: 300,
         height: 300
       }
-    }
+    },
+    click:true
   },
   touchStart (e) {
     this.wecropper.touchStart(e)
@@ -32,9 +33,9 @@ Page({
   },
   getCropperImage () {
     var that = this;
-
+    wx.showLoading()
     this.wecropper.getCropperImage((avatar) => {
-      if (avatar) {
+      if (avatar && that.data.click) {
         console.log(avatar)
         //  获取到裁剪后的图片
         
@@ -44,7 +45,8 @@ Page({
           name: 'file',
           formData:
               {
-                  wxid: wxUtil.getUserId()
+                wxid: wxUtil.getUserId(),
+                fileName : wxUtil.now_time()+".png"
               },
           success(res) {
               console.log('------------ res.data --------- ')
@@ -52,33 +54,21 @@ Page({
 
               console.log(resp_data);
               if (resp_data.result == "success") {
-                  console.log(app.globalData.img_url + resp_data.data.fileSrc);
+                  // console.log(app.globalData.img_url + resp_data.data.fileSrc);
                   that.setData({
                       id: resp_data.data.id,
-                      avator_url: resp_data.data.fileSrc,
-                      head_url: app.globalData.img_url + resp_data.data.fileSrc,
-                      save: false
+                    avator_url: resp_data.data.thumbSrc,
+                    head_url: app.globalData.img_url + resp_data.data.thumbSrc,
+                      save: false,
+                      click:false
                   });
-                // var pages = getCurrentPages(); // 获取页面栈
-
-                // var currPage = pages[pages.length - 1]; // 当前页面
-
-                // var prevPage = pages[pages.length - 2]; // 上一个页面
-
-                // prevPage.setData({
-                //   mydata: { 
-                //     id: resp_data.data.id,
-                //     avator_url: resp_data.data.fileSrc,
-                //     head_url: app.globalData.img_url + resp_data.data.fileSrc,
-                //     save: false
-                //    } // 假数据
-                // })
+                
                 let pages = getCurrentPages();
                 let prevPage = pages[pages.length - 2];
                 prevPage.setData({
                   id: resp_data.data.id,
-                  avator_url: resp_data.data.fileSrc,
-                  head_url: app.globalData.img_url + resp_data.data.fileSrc,
+                  avator_url: resp_data.data.thumbSrc,
+                  head_url: app.globalData.img_url + resp_data.data.thumbSrc,
                   save: false
                 })
                 wx.navigateBack({

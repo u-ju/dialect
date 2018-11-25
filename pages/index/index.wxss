@@ -14,8 +14,9 @@
 }
 .search_icon{
   width: 72rpx;
-  text-align: right;
-  line-height: 60rpx;
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
 }
 .search_icon image{
   width: 20rpx;
@@ -49,14 +50,14 @@
   font-size: 32rpx;
 }
 .video-item{
-  width: 370rpx;
+  width: 374rpx;
   position: relative;
   overflow: hidden;
 }
 .video-item image{
-  width: 370rpx;
+  width: 374rpx;
   height: 208rpx;
-  margin-bottom: 14rpx;
+  
 }
 
 .badge{
@@ -72,11 +73,11 @@
 }
 .label text{
   font-size: 22rpx;
-  color: #666666;
+  color: #949494;
   margin-right: 16rpx;
 }
 .label{
-  margin: 12rpx 0 30rpx 0rpx;
+  margin: 6rpx 0 30rpx 0rpx;
 }
 .video{
   display: flex;
@@ -100,7 +101,11 @@
   margin-left: 20rpx;
 }
 .video_title{
+  display: block;
   font-weight: bold;
+  color: #222222;
+  margin-top: 12rpx;
+  overflow: hidden;
 }
 .button{
   width: 300rpx;
@@ -171,4 +176,16 @@
   font-size: 30rpx;
   color: #666666;
   font-weight: bold;
+}
+.video-item>navigator{
+  background-color: #0e0f1a;
+  margin-bottom: 14rpx;
+  width:370rpx;
+  height: 208rpx;
+}
+.bg0e0f1a{
+  background-color: #0e0f1a;
+  height: 208rpx;
+  width:100%;
+  overflow: hidden;
 }

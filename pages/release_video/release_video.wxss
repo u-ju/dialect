@@ -14,10 +14,11 @@ view{
 .model-btn {
   /* border: none; */
   text-align: center;
+  
 }
 
 .play-icon {
-  /* border-top: 36rpx solid transparent;
+  /* border-top: 46rpx solid transparent;
   border-left: 46rpx solid #fff;
   border-bottom: 32rpx solid transparent; */
 }
@@ -45,15 +46,25 @@ view{
 }
 
 .rv_text {
-  color: #f1843b;
+  /* color: #f1843b;
   font-size: 28rpx;
-  /* width: 72rpx; */
-  height: 36rpx;
-  padding:0 20rpx 4rpx 20rpx;
+  height: 46rpx;
+  line-height: 46rpx;
+  padding:2rpx 20rpx;
   background-color: #f2ded1;
-  border-radius: 36rpx;
+  border-radius: 46rpx;
+  text-align: center;
+  margin-right: 30rpx; */
+  padding: 0 20rpx;
+  display: inline-block;
+  height: 46rpx;
+  line-height: 46rpx;
   text-align: center;
   margin-right: 30rpx;
+  font-size: 28rpx;
+  border-radius: 46rpx;
+  background-color:#f2ded1;
+  color:#f1843b;
 }
 .rv_rigth_item{
   width: 570rpx;
@@ -62,8 +73,8 @@ view{
   width: 570rpx;
   border: none;
   border-bottom: 1px solid #666;
-  height: 36rpx;
-  min-height: 36rpx;
+  height: 46rpx;
+  min-height: 46rpx;
   font-size: 26rpx;
 }
 
@@ -78,7 +89,7 @@ view{
   color: #666;
 }
 .hhh text{
-  margin: 0 35rpx 30rpx 0;
+  margin: 4rpx 35rpx 30rpx 0;
 }
 .rv_rigth_item .checked {
   color: #F1843B;
@@ -89,8 +100,8 @@ view{
   height: 40rpx;
 }
 .biaoqian image {
-  width: 24rpx;
-  height: 24rpx;
+  width: 34rpx;
+  height: 34rpx;
 }
 
 .label_add input {
@@ -103,7 +114,8 @@ view{
 
 .label_add view {
   width: 80rpx;
-  line-height: 36rpx;
+  height: 46rpx;
+  line-height: 46rpx;
   background-color: #f1843b;
   color: white;
   border-radius: 5rpx;
@@ -186,11 +198,12 @@ button::after {
   justify-content: space-between;
 }
 .input_link image{
-  width:24rpx;
-  height:24rpx;
+  width:30rpx;
+  height:30rpx;
 }
 .input_link input{
   width: 520rpx;
+  margin: 10rpx 0;
 }
 .del_video{
   width: 60rpx;
@@ -221,12 +234,15 @@ button::after {
   position: relative;
 }
 .bq_name image{
-  width:20rpx;
-  height:20rpx;
+  width:26rpx;
+  height:26rpx;
   position: absolute;
   right: 20rpx;
   top: -4rpx;
 }
 .height130{
   height: 300rpx;
+}
+.margin0{
+  margin: 0;
 }

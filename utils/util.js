@@ -1,4 +1,48 @@
 const app = getApp()
+//util.js
+function now_time(){
+  var date = new Date();
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var day = date.getDate();
+  var hour = date.getHours();
+  var minute = date.getMinutes();
+  var second = date.getSeconds();
+  var getMilliseconds = date.getMilliseconds();
+  return  ''+year +  month +  day +  hour+ minute +  second+getMilliseconds+ Math.floor(Math.random() * 10) + Math.floor(Math.random() * 10) + Math.floor(Math.random() * 10)
+}
+function imageUtil(e) {
+  var imageSize = {};
+  var originalWidth = e.detail.width;//图片原始宽
+  var originalHeight = e.detail.height;//图片原始高
+  var originalScale = originalHeight / originalWidth;//图片高宽比
+  console.log('originalWidth: ' + originalWidth)
+  console.log('originalHeight: ' + originalHeight)
+  //获取屏幕宽高
+  wx.getSystemInfo({
+    success: function (res) {
+      var windowWidth = res.windowWidth;
+      var windowHeight = res.windowHeight;
+      var windowscale = windowHeight / windowWidth;//屏幕高宽比
+      console.log('windowWidth: ' + windowWidth)
+      console.log('windowHeight: ' + windowHeight)
+      if (originalScale < windowscale) {//图片高宽比小于屏幕高宽比
+        //图片缩放后的宽为屏幕宽
+        imageSize.imageWidth = windowWidth;
+        imageSize.imageHeight = (windowWidth * originalHeight) / originalWidth;
+      } else {//图片高宽比大于屏幕高宽比
+        //图片缩放后的高为屏幕高
+        imageSize.imageHeight = windowHeight;
+        imageSize.imageWidth = (windowHeight * originalWidth) / originalHeight;
+      }
+
+    }
+  })
+  console.log('缩放后的宽: ' + imageSize.imageWidth)
+  console.log('缩放后的高: ' + imageSize.imageHeight)
+  return imageSize;
+}
+
 function formatTime(time) {
     if (typeof time !== 'number' || time < 0) {
         return time
@@ -22,6 +66,7 @@ function formatTime(time) {
  * @type {{formatTime: formatTime, crtTimeFtt: crtTimeFtt, alert: alert, loginOpenId: loginOpenId, dialog: dialog, loading: loading, postJSON: postJSON, getJSON: getJSON, replaceStr: (function(*): string)}}
  */
 module.exports = {
+    now_time:now_time,
     formatTime: formatTime,
     crtTimeFtt: crtTimeFtt,
     ok_dialog: ok_dialog,
@@ -34,7 +79,9 @@ module.exports = {
     getUserId: getUserId,
     unique: unique,
     isValidURL: isValidURL,
-    deplay_redirect: deplay_redirect
+    deplay_redirect: deplay_redirect,
+  alert: alert,
+  imageUtil: imageUtil
 }
 
 /**
@@ -71,37 +118,48 @@ function getUserId() {
     if (wxid) {
         return wxid;
     }
-    wx.request({
-        url: app.globalData.api_url + "/getwxInfo",
-        data: {
-            code: res1.code,
-            rawData: res.rawData,
-            signature: res.signature,
-            encryptedData: res.encryptedData,
-            iv: res.iv
-        },
-        method: "post",
-        header: {
-            'content-type': 'application/x-www-form-urlencoded' // 默认值
-        },
-        success: function (res) {
-            console.log(res.data);
-            if (res.data.result == "success") {
-                console.log(' ----------- wxid:' + wxid + " -------------");
-                console.log(res.data.data);
+  wx.login({
+    success: function (res1) {
+      if (res1.code) {
+        wx.getUserInfo({
+          success(res){
+            wx.request({
+              url: app.globalData.api_url + "/getwxInfo",
+              data: {
+                code: res1.code,
+                rawData: res.rawData,
+                signature: res.signature,
+                encryptedData: res.encryptedData,
+                iv: res.iv
+              },
+              method: "post",
+              header: {
+                'content-type': 'application/x-www-form-urlencoded' // 默认值
+              },
+              success: function (res) {
                 console.log(res.data);
-
-                wxid = res.data.data;
-                wx.setStorageSync('wxid', wxid);
-            } else {
-                console.log(res.data);
-            }
-        }
-    });
-
+                if (res.data.result == "success") {
+                  wxid = res.data.data;
+                  wx.setStorageSync('wxid', wxid);
+                } else {
+                  console.log(res.data);
+                }
+              }
+            });
+          }
+        })
+      }
+    }
+  })
     return wxid;
 }
-
+function alert(msg, time = 2000) {
+  wx.showToast({
+    title: msg,
+    icon: 'none',
+    duration: time,
+  });
+}
 /**
  *  延迟跳转
  * @param redirect_url 延迟跳转url地址

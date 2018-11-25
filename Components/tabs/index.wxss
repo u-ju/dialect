@@ -10,11 +10,14 @@
 .van-tabs__line{z-index:1;left:2rpx;bottom:0;height:6rpx;position:absolute;background-color:#F1843B;border-radius:2px 0 2px 0}
 .van-tabs--line{padding-top:80rpx}
 .van-tabs--line .van-tabs__wrap{height:80rpx;padding: 0 24rpx;}
-.van-tabs--card{padding-top:30px;margin:0 15px}.van-tabs--card .van-tabs__wrap{height:30px}.van-tab{-webkit-flex:1;flex:1;cursor:pointer;padding:0 5px;font-size:14px;position:relative;color:#333;line-height:80rpx;text-align:center;box-sizing:border-box;background-color:#fff;min-width:0}.van-tab span{display:block}.van-tab--active .van-ellipsis{color:#333333}
+.van-tabs--card{padding-top:30px;margin:0 15px}.van-tabs--card .van-tabs__wrap{height:30px}.van-tab{-webkit-flex:1;flex:1;cursor:pointer;padding:0 5px;font-size:14px;position:relative;color:#333;line-height:80rpx;text-align:center;box-sizing:border-box;background-color:#fff;min-width:0}.van-tab span{display:block}.van-tab--active .van-ellipsis{color:#f1843b}
 /* .van-tab--disabled{color:#c9c9c9} */
 .van-tabs__scroll--line,.svan-tabs__nav{
   border: none;
   outline: none;
-  /* background: red; */
   }
- 
+/*::-webkit-scrollbar {*/
+  /*width: 0;*/
+  /*height: 0;*/
+  /*color: transparent;*/
+/*}*/

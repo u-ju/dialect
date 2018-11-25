@@ -35,6 +35,7 @@ Page({
         wxUtil.postJSON(form, function (res) {
             if (res.statusCode == 200 && res.data.result == "success") {
                 let labelItem = res.data.data;
+                console.log(res)
                 if (labelItem.length > 0) {
                     let labels = labelItem,
                         name = [];
@@ -147,10 +148,10 @@ Page({
         const that = this;
         let title = e.detail.value.keywords;
         let tag = that.data.labelValue;
-
-        if (title.length < 1)
-        {
-            wxUtil.info_dialog("标题不得为空");
+      console.log(tag.length)
+      if (title.length < 1 && tag.length<1){
+        wxUtil.info_dialog("请输入标题或者标签");
+            
             return false;
         }
 

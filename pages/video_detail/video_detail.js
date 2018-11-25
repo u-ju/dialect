@@ -2,7 +2,6 @@
 // 公共部分
 const app = getApp()
 var wxUtil = require("../../utils/util.js")
-
 Page({
     data: {
         curr_id: '',
@@ -56,10 +55,14 @@ Page({
         isZan: '', // 是否点赞
 
         firstPlay: true, // 第一次播放
-
+        width: 750,
+        height: (9 * 750 / 16)
+    },
+    hhh(e){
+      console.log(e)
     },
     onReady: function () {
-        this.videoContext = wx.createVideoContext('myVideo')
+      this.videoContext = wx.createVideoContext('myVideo')
     },
     /**
      * 视屏播放
@@ -147,7 +150,7 @@ Page({
             });
         });
     },
-
+  
     /**
      * 视屏收藏
      * @param e
@@ -221,17 +224,22 @@ Page({
         wxUtil.loading();
         // 加载视屏信息
         wxUtil.postJSON(form, function (res) {
+
             if (res.statusCode == 200 && res.data.result == "success") {
+              
                 let video = res.data.data;
-
+                console.log(res)
                 // 如果是自己发布的视频，咱们就跳转到自己的视频详情. 要乖, 不能给自己点赞、收藏哦
-
-
-
+              if (video.height>video.width){
+                that.setData({
+                  width:400,
+                  height: 750
+                })
+              }
                 // 视屏播放信息
                 let item = [{
                     id: video.id,
-                    src: img_url + video.url,
+                    src: video.url,
                     poster: img_url + video.thumb,
                 }];
 
@@ -252,6 +260,7 @@ Page({
                     dianzan: that.data.dianzan_con[zan_idx],
                     shoucang: that.data.shoucang_con[shoucnag_idx],
                 });
+              wx.hideLoading()
             } else {
                 wxUtil.info_dialog("视频加载超时.");
             }

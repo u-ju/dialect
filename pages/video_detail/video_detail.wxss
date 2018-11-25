@@ -4,9 +4,12 @@
 	position: relative;
   /* background-color: rgba(0, 0, 0, 1) */
 }
-.model-img{
+/* .model-img{
 	width: 100%;
 	height: 420rpx;
+} */
+.video{
+  background-color: #0e0f1a;
 }
 .model-btn{
 	position:absolute;
@@ -81,4 +84,11 @@
 }
 .checked{
   color: #F1843B;
+}
+.colorCCC {
+  color: #ccc;
+  font-size: 20rpx;
+  margin-top: 30rpx;
+  padding:0 24rpx;
+  line-height:30rpx;
 }

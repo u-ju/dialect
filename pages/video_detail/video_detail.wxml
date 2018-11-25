@@ -2,12 +2,12 @@
 <view>
     <view class="margin_bottom--100" wx:for="{{items}}" wx:key="unique">
         <view class="video-container">
-            <view class="video" data-id="{{item.id}}" bindtap="videoPlay">
-                <video wx:if="{{curr_id == item.id}}" id="myVideo" style="width: 750rpx;height: calc(9 * 750rpx / 16);"
-                       id="myVideo" src="{{item.src}}" poster="{{item.poster}}" objectFit="cover" controls></video>
-                <view wx:else>
-                    <image class="model-img" style="width: 750rpx;height: calc(9 * 750rpx / 16);" mode="aspectFill"
-                           src="{{item.poster}}"></image>
+            <view class="video center" data-id="{{item.id}}" bindtap="videoPlay">
+                <video wx:if="{{curr_id == item.id}}"    style="width: 750rpx;height: calc(9 * 750rpx / 16);" id="myVideo" src="{{item.src}}" custom-cache='{{false}}'  poster="{{item.poster}}" objectFit="contain" controls bindprogress='hhh'></video>
+                <!-- " -->
+                <view wx:else class='center'>
+                    <image class="model-img" mode="aspectFit"  style="width: 750rpx;height: calc(9 * 750rpx / 16);" mode='aspectFit' src="{{item.poster}}"></image>
+                            <!-- style=";" -->
                     <view class="model-btn">
                         <view class="play-icon"></view>
                     </view>
@@ -33,4 +33,6 @@
         <view class='title'>游戏规则</view>
         <text decode="{{true}}" space="{{true}}">{{info.intro}}</text>
     </view>
+    <view class='colorCCC'>免责声明：本软件为公益性质，仅用于普及更多互动游戏玩法。如果该视频侵犯了您的合法权益，请发送邮件至xctime@126.com进行申诉，我们会尽快进行删除。</view>
 </view>
+

@@ -3,9 +3,10 @@
   <!-- <view class='> -->
     <view class='head'>
       <view class='portrait'  bindtap='uploadHeadPhoto'>
-        <!--<open-data type="userAvatarUrl"></open-data>-->
+        <!---->
         <!--<view>-->
-          <image src='{{head_url}}' mode='scaleToFill'></image>
+          <image wx:if="{{head_url}}" src='{{head_url}}' mode='scaleToFill'></image>
+          <open-data wx:else type="userAvatarUrl"></open-data>
         <!--</view>-->
         <view class='mask'>
           <image src='../../images/img_touxiang@2x.png'></image>
@@ -28,6 +29,14 @@
         </view>
         <input type='number' name='phone' value='{{phone}}' placeholder='请输入手机号' bindinput='input' maxlength='11' placeholder-class='placeholder'></input>
         <!-- <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class='getPhoneNumber'>获取手机号</button> -->
+      </view>
+      <view class='input_item' wx:if="{{yzm==1}}">
+        <view class='input_con'>
+          <image src='../../images/yzm.png'></image>
+          <text>验证码</text>
+        </view>
+        <input type='number' name='yzm_num' value='{{yzm_num}}' placeholder='请输入验证码' bindinput='input_yzm' maxlength='6' placeholder-class='placeholder'></input>
+        <button   class='getPhoneNumber' bindtap="bindButtonTap" disabled='{{disabled}}' >{{text}}</button>
       </view>
       <button class='save' formType="submit" disabled='{{save}}'>保存</button>
     </form>

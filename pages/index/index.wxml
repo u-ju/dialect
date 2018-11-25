@@ -1,6 +1,6 @@
 <!--index.wxml-->
 
-<view wx:if="{{fenhao}}" class='bg3'>
+<view wx:if="{{fenhao==-1}}" class='bg3'>
 
   <view class='tck'>
     <view class='wxts'>温馨提示</view>
@@ -27,24 +27,28 @@
                     <view class='search_input search_input_con'>请输入想观看的内容</view>
                 </navigator>
             </view>
-            <view class='title'>
+            <view class='title' wx:if="{{name_index==0}}">
                 <image src='../../images/icon_video@2x.png'></image>
                 <text>为您精选</text>
             </view>
             <view class='video'>
                 <!-- <blcok> -->
+                <block wx:for="{{videoList}}">
 
-                <navigator url='../video_detail/video_detail?vid={{item.id}}' wx:for="{{videoList}}">
-                    <view class='video-item'>
-                        <image mode='aspectFill' src='{{item.thumb}}'></image>
+                <!-- <navigator url='../video_detail/video_detail?' > -->
+                    <view class='video-item' bindtap='link_detail' data-vid="{{item.id}}" data-isMy="{{item.isMy}}" >
+                      <view class='bg0e0f1a'>
+                        <image mode='aspectFit' src='{{item.thumb}}'></image>
+                      </view>
+                        
                         <!--<view class='badge zi'>自制</view>-->
                         <text class='video_title'>{{item.title}}</text>
                         <view class='label'>
                             <text>{{item.tag}}</text>
                         </view>
                     </view>
-                </navigator>
-
+                <!-- </navigator> -->
+                </block> 
              <!-- <navigator url='../video_detail_del/video_detail_del'>
                     <view class='video-item'>
                       <image src='../../images/img1@2x.png'></image>

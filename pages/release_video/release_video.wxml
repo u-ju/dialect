@@ -1,35 +1,34 @@
 <!--pages/release_video/release_video.wxml-->
-<import src="../../Components/tab-bar/index.wxml"/>
-<template is="tabBar" data="{{tabBar:bindData.tabBar}}"/>
-<view>
-  <view class="margin_bottom--100 marginbtm20" wx:for="{{items}}" wx:key="unique" wx:if="{{tempFilePath}}">
+<!--pages/release_video/release_video.wxml-->
+<!-- <import src="../../Components/tab-bar/index.wxml"/>
+<template is="tabBar" data="{{tabBar:bindData.tabBar}}"/> -->
+<view bindtap='outbtn'>
+  <view class="margin_bottom--100 marginbtm20" wx:for="{{items}}" wx:key="unique" wx:if="{{item.src}}">
     <view class="video-container">
         <view  class="video" data-id="{{item.id}}" bindtap="videoPlay" >
-          <video  id="myVideo" style="width: 750rpx;height: calc(9 * 750rpx / 16);background-color: #333333" id="myVideo"  src="{{tempFilePath}}"
-           objectFit="cover"  controls>
-            <!--src="{{item.src}}"-->
-          <cover-view class="img-wrap"  bindtap="del_video">
-              <cover-image class="img" src="../../images/icon_quxiao@2x.png"/>
-          </cover-view>
+          <video wx:if="{{curr_id == item.id}}" id="myVideo" style="width: 750rpx;height: calc(9 * 750rpx / 16);" id="myVideo" src="{{item.src}}" objectFit='contain'  poster="{{picUrl}}" custom-cache='{{false}}'  objectFit="{ " src="{{item.src}}" objectFit='contain'  poster="{{picUrl}}"   objectFit="{{isVertical}}"  controls>
+            <cover-view class="img-wrap"  bindtap="del_video">
+                <cover-image class="img" src="../../images/icon_quxiao@2x.png"/>
+            </cover-view>
           </video>
-          <!-- <view wx:else >
+          <view wx:else >
               <image src='../../images/icon_quxiao@2x.png' class='del_video'  bindtap="del_video"></image>
-              <image class="model-img" style="width: 750rpx;height: calc(9 * 750rpx / 16);" mode="aspectFill" src="{{item.poster}}"></image>
+              <image wx:if="{{picUrl}}" class="model-img" mode='aspectFit' style="width: calc(16 * 420rpx / 9);height: 420rpx;" src="{{picUrl}}"></image>
               <view class="model-btn">
                       <view class="play-icon"></view>
               </view>
-          </view> -->
+          </view>
         </view>
     </view>
   </view>
-  <view wx:if="{{tempFilePath==''}}" class='wei_video marginbtm20'>
+  <view wx:if="{{items[0].src==''}}" class='wei_video marginbtm20'>
     <image class="model-img" style="width: 750rpx;height: calc(9 * 750rpx / 16);" mode="aspectFill" src="../../images/img@2x.png"></image>
     <view class='loacl' bindtap="uploadVideo">
       <i-icon type="add" size="18" color="#fff"></i-icon>
       <text>本地视频</text>
-    </view>
+    </view>      
   </view>
-
+  
   <form bindsubmit="formSubmit">
     <view class='padding24'>
     <view class='flex_center'>
@@ -42,7 +41,8 @@
         <view class='rv_text'>{{item.name}}</view>
         <view class='rv_rigth_item hhh'>
           <block wx:for="{{item.tags}}" wx:key="index" wx:for-item="value">
-            <text class='{{index == item.checked ? "checked" : ""}}' data-curr='{{item.name}}' data-index='{{index}}' data-usertag="{{value.tagName}}" bindtap='checked' >{{value.tagName}}</text>
+            <!--<text class='{{index == curr.cj ? "checked" : ""}}' data-curr='cj' data-index='{{index}}' bindtap='checked' >{{item}}</text>-->
+            <text class='{{index == item.checked ? "checked" : ""}}'  data-curr='{{item.name}}' data-index='{{index}}' bindtap='checked' >{{value.tagName}}</text>
           </block>
         </view>
       </view>
@@ -55,14 +55,14 @@
           <text class='checked' >{{item}}</text>
           <image src='../../images/icon_quxiao@2x1.png' bindtap='del_bq' data-name='{{item}}'></image>
         </view>
-        <view class='biaoqian flex_center ' bindtap='add_pic' wx:if="{{add_hidden==1}}">
+        <view class='biaoqian flex_center ' catchtap='add_pic' wx:if="{{add_hidden==1}}">
         <block wx:if="{{isBtnHide}}">
           <image src='../../images/icon_xinzeng@2x.png'></image>
         </block>
         </view>
-        <view class='label_add flex_center' wx:else>
+        <view class='label_add flex_center' wx:else >
           <block wx:if="{{isBtnHide}}">
-            <input name='label' value='{{label}}' bindinput='label' maxlength='4'></input>
+            <input name='label'  catchtap='inbtn' value='{{label}}' bindinput='label' maxlength='4'></input>
             <view bindtap='add'>添加</view>
           </block>
         </view>
@@ -77,12 +77,12 @@
       <view class='addinput'>
         <block wx:for="{{link}}" wx:key="index" wx:for-item="link">
           <view class='input_link'>
-            <input class='rv_input' name="{{link.linkname}}" bindinput="iptLinkUrl"   data-linkname='{{link.index}}' placeholder='请输入相关链接'  value='' ></input>
+            <input class='rv_input' name="{{link.linkname}}"  bindinput='link_fir'  data-linkname='{{link.index}}' placeholder='请输入相关链接'  value='' maxlength='100' ></input>
             <image wx:if="{{link.index>1}}" src='../../images/icon_shanchu1@2x.png' bindtap='del_link' data-linkname='{{link.linkname}}'></image>
           </view>
         </block>
-        <view class='biaoqian' bindtap='add_link'>
-          <image src='../../images/icon_xinzeng@2x.png'></image>
+        <view class='biaoqian margin0' bindtap='add_link' wx:if="{{add_link}}">
+          <image src='../../images/icon_xinzeng@2x.png'  wx:if="{{add_link_fir}}"></image>
         </view>
       </view>
     </view>

@@ -5,7 +5,7 @@
             <navigator url="../video_detail/video_detail?vid={{item.id}}">
                 <view class="video_item">
                     <view class="video_item_left">
-                        <image src='../../images/img1@2x.png'></image>
+                        <image  mode='aspectFit' src='{{item.thumb}}'></image>
                     </view>
                     <view class="video_item_right">
                         <view class="video_item_right_top">

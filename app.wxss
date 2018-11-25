@@ -10,3 +10,15 @@ view{
 .app{
   padding-bottom: 150rpx;
 }
+.center{
+  text-align: center
+}
+.video_item_left{
+  background-color: #0e0f1a;
+  height: 135rpx;
+}
+::-webkit-scrollbar{
+width: 0;
+height: 0;
+color: transparent;
+}

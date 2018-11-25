@@ -1,8 +1,8 @@
 {
   "pages": [
+    
     "pages/index/index",
     "pages/upload/upload",
-    
     "pages/release_video/release_video",
     "pages/personal_center/personal_center",
     "pages/modification_infor/modification_infor",
@@ -19,10 +19,10 @@
     "navigationBarTextStyle": "black"
   },
   "networkTimeout": {
-    "request": 10000,
-    "connectSocket": 10000,
-    "uploadFile": 100000,
-    "downloadFile": 10000
+    "request": 300000,
+    "connectSocket": 300000,
+    "uploadFile": 300000,
+    "downloadFile": 300000
   },
     "enablePullDownRefresh": true
 }

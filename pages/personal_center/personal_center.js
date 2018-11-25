@@ -37,7 +37,8 @@ Page({
         pageSize: 6,
         hasMoreData: true,
         videoList: "",
-
+      avatarUrl:"",
+      avatarUrl_t:""
     },
 
     /**
@@ -45,17 +46,18 @@ Page({
      */
     onLoad: function (options) {
         const that = this;
-        
-        console.log(options.ing);
+
+      
+        // console.log(options.ing);
         if (options.ing) {
             that.setData({
                 ing: parseInt(options.ing)
             })
         }
         that.setData({
-            wxid: wx.getStorageSync("wxid")
+            wxid: wxUtil.getUserId()
         })
-        // that.init();
+        
     },
     init() {
         // 用户中心 wxid
@@ -82,34 +84,26 @@ Page({
             }
         }
         wxUtil.postJSON(formUser, function (res) {
+          console.log(res)
             if (res.data.result == "success") {
                 var userInfo = res.data.data;
 
                 console.log(' --------- userinfo2 -------')
                 // console.log(userInfo)
-                console.log(userInfo.avatarUrl);
+                
                 var avatarUrl = userInfo.avatarUrl
                 // 微信头像
                 if (!wxUtil.isValidURL(userInfo.avatarUrl)) {
                     avatarUrl = app.globalData.img_url + userInfo.avatarUrl
-                    console.log(' ----- 微信头像 ----- ')
-
                 }
-                if(!that.data.avatarUrl){
-                  that.setData({
-                    avatarUrl: avatarUrl
-                  });
-                }
-                
                 wx.setStorageSync("phone", userInfo.phone);
-
-
-                console.log(userInfo.avatarUrl);
+              console.log(avatarUrl)
 
                 var userInfo = {
                     nickname: userInfo.nickName,
                     mobile: (userInfo.phone == null) ? '未绑定手机号' : userInfo.phone,
-                    avatarUrl: userInfo.avatarUrl,
+                    avatarUrl_t: avatarUrl,
+                    avatarUrl: avatarUrl,
                     zans: userInfo.zans,
                     viewnums: userInfo.viewnums
                 };
@@ -145,12 +139,10 @@ Page({
      */
     getMoreData: function (data, that) {
         // wxUtil.loading();
+        console.log(data)
         wxUtil.postJSON(data, function (res) {
-
             if (res.statusCode == 200 && res.data.result == "success") {
                 var videoList2 = res.data.data.list;
-                console.log(videoList2)
-                console.log(' ---------- videoList2 ----------- ')
                 if (videoList2.length > 0) {
                     for (let i in videoList2) {
                         videoList2[i].tag = wxUtil.replaceStr(videoList2[i].tag)
@@ -161,11 +153,7 @@ Page({
                     if (that.data.pageNo == 1) {
                         videoList = [];
                     }
-
-                    console.log(' ---------- ' + videoList2.length + ' ----------- ')
-                    console.log(' ---------- ' + that.data.pageSize + ' ----------- ')
                     if (videoList2.length < that.data.pageSize) {
-                        console.log(" ------ 没有数据了 -------");
                         that.setData({
                             pageNo: res.data.data.pageNo,
                             videoList: videoList.concat(videoList2),
@@ -178,12 +166,10 @@ Page({
                             pageNo: that.data.pageNo + 1,
                         });
                     }
-                    // console.log(videoList.concat(videoList2));
-                    console.log(that.data.videoList)
                 } else {
                     that.setData({
                         hasMoreData: false,
-                        videoList: []
+                      videoList: that.data.videoList
                     });
                 }
             }
@@ -207,9 +193,7 @@ Page({
 
     ing_tab(e) {
         console.log(' ---------- click tab -----------')
-        var that = this;
-        console.log(e)
-        console.log(" ------ 加载分页 ----- ")
+        
         var that = this;
         var wxid = wxUtil.getUserId();
         console.log(wxid)
@@ -242,22 +226,45 @@ Page({
      */
     onShow: function () {
         var that = this;
-        that.setData({
-          avatarUrl: wx.getStorageSync("avatarUrl") || ""
+        console.log("执行")
+      that.init();
+
+      if (wx.getStorageSync("avatarUrl")) {
+        console.log(wx.getStorageSync("avatarUrl"))
+        wx.getImageInfo({
+          src: wx.getStorageSync("avatarUrl"),
+          success: function (res) {
+            console.log(res)
+            that.setData({
+              avatarUrl: res.path
+            })
+          },
+          fail(res){
+            that.setData({
+              avatarUrl: that.data.avatarUrl
+            })
+            
+          }
         })
-        that.init();
+        console.log(wx.getStorageSync("avatarUrl"))
+      }
+        that.setData({
+          // avatarUrl: wx.getStorageSync("avatarUrl") || "",
+          videoList:[],
+          pageNo:1
+        })
+        
         var video_form = {
             apiUrl: app.globalData.api_url + "/perVideo/list", //  发布视屏列表接口
             data: {
-                pageNo: 1,
-                pageSize: that.data.pageSize,
+              pageNo: that.data.pageNo,
+                pageSize: 6,
                 wxid: that.data.wxid,
                 type: that.data.ing + 1,
             }
         };
         // 加载分页
         that.getMoreData(video_form, that);
-        console.log(that.data.videoList)
     },
 
     /**
